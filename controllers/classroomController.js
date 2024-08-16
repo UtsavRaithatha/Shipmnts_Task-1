@@ -79,22 +79,6 @@ exports.removeStudentFromClassroom = async (req, res) => {
   }
 };
 
-// const taskSchema = new mongoose.Schema({
-//     title: { type: String, required: true },
-//     description: { type: String },
-//     dueDate: { type: Date, required: true },
-//     submissions: [
-//       {
-//         student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
-//         status: {
-//           type: String,
-//           enum: ["submitted", "pending"],
-//           default: "pending",
-//         },
-//       },
-//     ],
-//   });
-
 exports.assignTasksToClassroom = async (req, res) => {
   try {
     const { classroomId } = req.params;
@@ -120,6 +104,25 @@ exports.assignTasksToClassroom = async (req, res) => {
       description,
       dueDate,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.checkSubmissionStatus = async (req, res) => {
+  try {
+    const { classroomId, taskId } = req.params;
+    const classroom = await Classroom.findById(classroomId).populate("tasks");
+
+    const task = classroom.tasks.find((task) => task._id.toString() === taskId);
+
+    const submissions = task.submissions.map((submission) => ({
+      studentId: submission.student,
+      studentName: submission.student.name,
+      status: submission.status,
+    }));
+
+    res.status(200).json(submissions);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
