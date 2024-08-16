@@ -2,8 +2,6 @@ const Teacher = require("../models/Teacher");
 const Classroom = require("../models/Classroom");
 const Student = require("../models/Student");
 const Task = require("../models/Task");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 exports.deleteClassroom = async (req, res) => {
   try {
