@@ -1,5 +1,6 @@
 const Teacher = require("../models/Teacher");
 const Classroom = require("../models/Classroom");
+const Student = require("../models/Student");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -39,7 +40,39 @@ exports.addStudentToClassroom = async (req, res) => {
 
     await classroom.save();
 
+    const student = await Student.findById(studentId);
+
+    student.classrooms.push(classroomId);
+
+    await student.save();
+
     res.status(200).json({ message: "Student added successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.removeStudentFromClassroom = async (req, res) => {
+  try {
+    const { classroomId, studentId } = req.params;
+
+    const classroom = await Classroom.findById(classroomId);
+
+    classroom.students = classroom.students.filter(
+      (student) => student.toString() !== studentId
+    );
+
+    await classroom.save();
+
+    const student = await Student.findById(studentId);
+
+    student.classrooms = student.classrooms.filter(
+      (classroom) => classroom.toString() !== classroomId
+    );
+
+    await student.save();
+
+    res.status(200).json({ message: "Student removed successfully." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
