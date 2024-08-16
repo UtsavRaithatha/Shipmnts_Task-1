@@ -16,6 +16,10 @@
 - The student or teacher can register first name, email and password and then login with the email and password to get a token
 - The token is required to access the API endpoints
 
+# Deployment Link
+
+- [Deployed Backend](https://shipmnts-task-1-kl7rep95g-utsavs-projects-43359c4e.vercel.app/)
+
 # API Endpoints
 
 ## Teacher Routes
