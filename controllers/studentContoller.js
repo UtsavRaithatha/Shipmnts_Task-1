@@ -67,3 +67,42 @@ exports.viewClassrooms = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.submitTask = async (req, res) => {
+  try {
+    const { classroomId, taskId, studentId } = req.params;
+    const { file } = req;
+
+    const classroom = await Classroom.findById(classroomId).populate("tasks");
+
+    const task = classroom.tasks.find((task) => task._id.toString() === taskId);
+
+    const studentSubmission = task.submissions.find(
+      (submission) => submission.student.toString() === studentId
+    );
+
+    if (studentSubmission) {
+      return res.status(400).json({ message: "Task already submitted" });
+    }
+
+    if (new Date() > task.dueDate) {
+      return res.status(400).json({ message: "Task submission is closed" });
+    }
+
+    task.submissions.push({
+      student: studentId,
+      status: "submitted",
+      file: {
+        url: file.location,
+        filename: file.originalname,
+        mimetype: file.mimetype,
+      },
+    });
+
+    await task.save();
+
+    res.status(200).json({ message: "Task submitted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

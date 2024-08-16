@@ -12,6 +12,11 @@ const taskSchema = new mongoose.Schema({
         enum: ["submitted", "pending"],
         default: "pending",
       },
+      file: {
+        url: { type: String },
+        filename: { type: String },
+        mimetype: { type: String },
+      },
     },
   ],
 });
