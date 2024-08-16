@@ -44,3 +44,42 @@
 - **DELETE** `/classrooms/:classroomId/students/:studentId`: Remove a student from a classroom
 - **POST** `/classrooms/:classroomId/tasks`: Assign tasks to a classroom
 - **GET** `/classrooms/:classroomId/tasks/:taskId/submissions`: Check submission status for a task
+
+# Screenshots
+
+## Register Teacher
+
+![alt text](image.png)
+
+## Login Teacher
+
+![alt text](image-1.png)
+
+## Create Classroom
+
+![alt text](image-2.png)
+
+## View Classrooms
+
+![alt text](image-3.png)
+
+## Register Student
+
+![alt text](image-4.png)
+
+## Login Student
+
+![alt text](image-5.png)
+
+## View Classrooms for Student
+
+![alt text](image-6.png)
+
+## Add a student to classroom
+
+![alt text](image-7.png)
+
+## Assign tasks to classroom
+
+![alt text](image-8.png)
+
