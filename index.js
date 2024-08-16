@@ -16,6 +16,7 @@ app.use(express.json());
 
 app.use("/teachers", teacherRoutes);
 app.use("/classrooms", classroomRoutes);
+app.use("/students", studentRoutes);
 
 const PORT = process.env.PORT || 5000;
 
